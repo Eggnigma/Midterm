@@ -1,0 +1,64 @@
+#!/usr/bin/bash
+
+#
+read -p 'Enter the username to create the first account: ' USER_NAME1
+
+read -p 'Enter the full name for the first user: ' COMMENT1
+
+read -p 'Enter the 8 character password to use for the first account: ' PASSWORD1
+
+for i in PASSWORD1; do
+  pass_length1=${#PASSWORD1}
+done
+
+if [ ${pass_length1} -lt 8 ]
+then
+  echo "Your password needs to be 8 characters in length"
+  read -p 'Enter the 8 character password to use for the first account: ' PASSWORD1
+else
+  echo "Thanks!"  
+fi
+
+#
+read -p 'Enter the username to create the second account: ' USER_NAME2
+
+read -p 'Enter the full name for the second user: ' COMMENT2
+
+read -p 'Enter the 8 character password to use for the second account: ' PASSWORD2
+
+for i in PASSWORD2; do
+  pass_length2=${#PASSWORD2}
+done
+
+if [ ${pass_length2} -lt 8 ]
+then
+  echo "Your password needs to be 8 characters in length"
+  read -p 'Enter the 8 character password to use for the second account: ' PASSWORD2
+else
+  echo "Thanks!"  
+fi
+
+#
+count=1
+for i in $(seq $count)
+do
+useradd -c "${COMMENT1}" -m ${USER_NAME1}
+
+useradd -c "${COMMENT2}" -m ${USER_NAME2}
+done
+
+for i in $(seq $count)
+do
+usermod -p ${PASSWORD1} ${USER_NAME1}
+
+usermod -p ${PASSWORD2} ${USER_NAME2}
+done
+
+#
+count=1
+for i in $(seq $count)
+do
+echo "$USER_NAME2 's password is $PASSWORD1"
+echo  "$USER_NAME2 's password is $PASSWORD2"
+exit 0
+done
